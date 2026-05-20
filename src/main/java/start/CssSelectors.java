@@ -50,6 +50,11 @@ public class CssSelectors {
                 .cssSelector("#item-0"));
         textBox1.click();
         pause(5000);
+        driver.navigate().back();
+        WebElement textBox2 = driver.findElement(By
+                .id("item-0"));
+        textBox2.click();
+        pause(5000);
         driver.quit();
     }
 
