@@ -45,6 +45,12 @@ public class CssSelectors {
                 .cssSelector("li[id='item-0']"));
         textBox.click();
         pause(3000);
+        driver.navigate().back();
+        WebElement textBox1 = driver.findElement(By
+                .cssSelector("#item-0"));
+        textBox1.click();
+        pause(5000);
+        driver.quit();
     }
 
     public void hideFooter() {
