@@ -42,7 +42,7 @@ public class CssSelectors {
         divElements2.click();
         pause(3000);
         WebElement textBox = driver.findElement(By
-                .cssSelector("li[id='item-0']"));
+                .cssSelector("li[id='item-0']")); //li[id='item-2']
         textBox.click();
         pause(3000);
         driver.navigate().back();
@@ -60,8 +60,8 @@ public class CssSelectors {
                 .cssSelector("li#item-0.btn.btn-light"));
         textBox3.click();
         pause(3000);
-       // WebElement textBoxFull = driver.findElement(By.cssSelector("div[class*='-field']")); //contains
-       // WebElement textBoxFull = driver.findElement(By.cssSelector("div[class^='text-']"));   // start with
+        // WebElement textBoxFull = driver.findElement(By.cssSelector("div[class*='-field']")); //contains
+        // WebElement textBoxFull = driver.findElement(By.cssSelector("div[class^='text-']"));   // start with
         WebElement textBoxFull = driver.findElement(By.cssSelector("div[class$='-container']"));  //end with
         System.out.println(textBoxFull.getTagName());
         pause(3000);
@@ -107,13 +107,37 @@ public class CssSelectors {
         driver.quit();
     }
 
+    @Test
+    public void taskTest() {
+        driver.get("https://demoqa.com/");
+        pause(3000);
+        driver.manage().window().maximize();
+        pause(3000);
+        hideFooter();
+        WebElement divElements = driver.findElement
+                (By.cssSelector("div.category-cards a:first-child"));
+        divElements.click();
+        pause(3000);
+//        WebElement radioButton = driver.findElement
+//                (By.cssSelector("li#item-2"));
+        WebElement radioButton = driver.findElement
+                (By.id("item-2"));
+        radioButton.click();
+        pause(3000);
+        WebElement btnYes = driver.findElement
+                (By.cssSelector("input[id='yesRadio']"));
+        btnYes.click();
+        pause(3000);
+        driver.quit();
+    }
+
     public void hideFooter() {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("document.querySelector('footer')" +
                 ".style.display='none'");
     }
 
-    public void scrollActions(){
+    public void scrollActions() {
         Actions actions = new Actions(driver);
         for (int i = 0; i < 10; i++) {
             actions.scrollByAmount(0, 500).perform();
@@ -125,12 +149,12 @@ public class CssSelectors {
         }
     }
 
-    public void scrollActionsMiddle(){
+    public void scrollActionsMiddle() {
         long totalHeight = (Long) ((JavascriptExecutor) driver).
                 executeScript("return document.body.scrollHeight");
         Actions actions = new Actions(driver);
         actions.scrollByAmount(0, (int) totalHeight / 2).perform();
-        }
+    }
 
     public void pause(int time) {
         try {
