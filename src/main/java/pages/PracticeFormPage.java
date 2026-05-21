@@ -1,5 +1,9 @@
 package pages;
 
+import dto.Student;
+import enums.Gender;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -22,12 +26,44 @@ public class PracticeFormPage extends BasePage {
     WebElement inputMobile;
     @FindBy(css = "textarea.form-control")
     WebElement textareaAddress;
+    @FindBy(css = "input[id='dateOfBirthInput']")
+    WebElement inputDateOfBirth;
+    @FindBy(css = ".subjects-auto-complete__input")
+    WebElement inputSubjects;
 
-    public void typePracticeForm() {
-    inputFirstName.sendKeys("Misha");
-    inputLastName.sendKeys("Mishin");
-    inputEmail.sendKeys("misha345@gmail.com");
-    inputMobile.sendKeys("1234567890");
-    textareaAddress.sendKeys("Address");
+    public void typePracticeForm(Student student) {
+        inputFirstName.sendKeys(student.getFirstName());
+        inputLastName.sendKeys(student.getLastName());
+        inputEmail.sendKeys(student.getEmail());
+        typeGender(student.getGender());
+        inputMobile.sendKeys(student.getMobile());
+        typeDateOfBirth(student.getDateOfBirth());
+        typeSubjects(student.getSubjects());
+        textareaAddress.sendKeys(student.getAddress());
+    }
+
+    private void typeSubjects(String subjects){
+       inputSubjects.click();
+       String[] strArr = subjects.trim().split(",");
+       for (String s: strArr){
+           inputSubjects.sendKeys(s);
+           inputSubjects.sendKeys(Keys.ENTER);
+       }
+    }
+
+    private void typeGender(Gender gender) {
+        driver.findElement(By.id(gender.getLocator())).click();
+    }
+
+    private void typeDateOfBirth(String dateOfBirth) {
+        inputDateOfBirth.click();
+        String operationSystem = System.getProperty("os.name");
+        System.out.println(operationSystem);
+        if (operationSystem.startsWith("Win"))
+            inputDateOfBirth.sendKeys(Keys.chord(Keys.CONTROL,"a"));
+        if (operationSystem.startsWith("Mac"))
+            inputDateOfBirth.sendKeys(Keys.chord(Keys.COMMAND, "a"));
+        inputDateOfBirth.sendKeys(dateOfBirth);
+        inputDateOfBirth.sendKeys(Keys.ENTER);
     }
 }
